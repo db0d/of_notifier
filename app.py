@@ -39,7 +39,7 @@ logger.debug(
     PROPRESENTER_MESSAGE_NAME,
     PROPRESENTER_TOKEN_NAME,
     VALIDATE_SIGNATURE,
-    ALLOWED_PHONE_NUMBERS or "(none — all senders allowed)",
+    f"(configured: {len(ALLOWED_PHONE_NUMBERS)} entries)" if ALLOWED_PHONE_NUMBERS else "(none — all senders allowed)",
     MESSAGE_REGEX.pattern,
 )
 
