@@ -1,4 +1,4 @@
-# of_kids_notifier
+# of_notifier
 
 A small service that listens for incoming SMS messages on a Twilio virtual
 phone number and forwards them into a ProPresenter message (lower third /
