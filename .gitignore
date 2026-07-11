@@ -219,3 +219,4 @@ __marimo__/
 
 .vscode/
 .claude/
+message_forwarder/node_modules/
