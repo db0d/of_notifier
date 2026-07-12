@@ -62,10 +62,13 @@ jobs:
           archive="of-notifier-v${VERSION}.tar.gz"
           tar -czf "$archive" \
             --exclude='.git' \
+            --exclude='.github' \
             --exclude='.venv' \
             --exclude='node_modules' \
             --exclude='__pycache__' \
             --exclude='.env' \
+            --exclude='dist' \
+            --exclude='logs' \
             --exclude="$archive" \
             .
           echo "ARCHIVE=$archive" >> "$GITHUB_ENV"
