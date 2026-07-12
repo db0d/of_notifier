@@ -145,6 +145,7 @@ install_wrapper() {
     uv_bin="$(command -v uv)"
     sudo tee "$BIN_LINK" >/dev/null <<EOF
 #!/bin/bash
+export PATH=$PATH:/opt/homebrew/bin/
 exec "$uv_bin" run --project "$INSTALL_DIR" start "\$@"
 EOF
     sudo chmod 755 "$BIN_LINK"
