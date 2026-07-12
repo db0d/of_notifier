@@ -43,6 +43,7 @@ needs to be installed) and for the service's environment variables.
 |---|---|
 | `TWILIO_AUTH_TOKEN` | Found at [twilio.com/console](https://twilio.com/console) |
 | `TWILIO_PHONE_NUMBER` | Your Twilio virtual number, e.g. `+15551234567` |
+| `ALLOWED_PHONE_NUMBERS` | Prompted one number at a time — enter a number, then choose to add another or move on. Leave the first entry blank to allow all senders |
 | `FLASK_HOST` / `FLASK_PORT` | Interface/port the webhook server binds to |
 | Smee webhook URL | Public URL Twilio calls (a [smee.io](https://smee.io) channel) — used for both `SMEE_URL` and `WEBHOOK_FORWARDING_URL` |
 | Local target URL | Where Smee forwards to locally (default `http://localhost:<FLASK_PORT>/sms`) |
@@ -71,3 +72,22 @@ tail -f /usr/local/opt/of-notifier/logs/of-notifier.err.log
 The installer is idempotent — re-running it skips already-installed
 dependencies, re-syncs the app files, re-prompts for the `.env` values, and
 re-registers the LaunchAgent.
+
+## Uninstalling
+
+```bash
+./install/uninstall.sh
+```
+
+Run as your normal user — **not** with `sudo` (it calls `sudo` itself
+where needed). This:
+
+1. Stops and removes the LaunchAgent (`local.of-notifier`).
+2. Removes the global wrapper command (`/usr/local/bin/of-notifier`).
+3. Removes the app directory (`/usr/local/opt/of-notifier`), including the
+   `.env` secrets file — after a confirmation prompt, since this step is
+   irreversible.
+
+Shared dependencies installed via Homebrew (`uv`, `node`) and the Xcode
+Command Line Tools are left in place, since they aren't exclusive to this
+app.

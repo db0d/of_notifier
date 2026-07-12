@@ -31,6 +31,9 @@ values, and registers the service as a login LaunchAgent so it starts
 automatically and restarts if it crashes. See [install/README.md](install/README.md)
 for details and service management commands.
 
+To remove the service, wrapper command, and app directory, run
+`./install/uninstall.sh`.
+
 ### Manual setup
 
 #### 1. Sync dependencies
@@ -54,6 +57,7 @@ Edit `.env` with your values:
 |---|---|
 | `TWILIO_AUTH_TOKEN` | Found at [twilio.com/console](https://twilio.com/console) |
 | `TWILIO_PHONE_NUMBER` | Your Twilio virtual number, e.g. `+15551234567` |
+| `ALLOWED_PHONE_NUMBERS` | Comma-separated allow list of E.164 sender numbers (e.g. `+15551234567,+15557654321`). Leave blank to allow all senders |
 | `SMEE_URL` | Your Smee.io channel URL — this is what Twilio calls |
 | `TARGET_URL` | Local URL Smee forwards to (default: `http://localhost:5000/sms`) |
 | `WEBHOOK_FORWARDING_URL` | URL used to validate the Twilio signature — usually the same as `SMEE_URL` |
@@ -64,6 +68,7 @@ Edit `.env` with your values:
 | `FLASK_HOST` | Interface to bind (default: `0.0.0.0`) |
 | `FLASK_PORT` | Port to listen on (default: `5000`) |
 | `VALIDATE_TWILIO_SIGNATURE` | Set to `false` only for local testing (default: `true`) |
+| `MESSAGE_REGEX_PATTERN` | Regex the SMS body must fully match to be forwarded; non-matching messages are ignored (e.g. `^[A-Z0-9]{4}$`) |
 
 #### 3. Enable the ProPresenter Network API
 
@@ -105,7 +110,7 @@ parallel. Press `Ctrl+C` to stop both.
 ## Project structure
 
 ```
-of_kids_notifier/
+of_notifier/
 ├── app.py                    # Flask webhook server
 ├── propresenter.py           # ProPresenter local API client
 ├── pyproject.toml            # Project metadata, dependencies, uv scripts
@@ -119,6 +124,7 @@ of_kids_notifier/
 │   └── README.md
 ├── install/                   # macOS installer (dependencies + LaunchAgent service)
 │   ├── install.sh
+│   ├── uninstall.sh            # Removes the LaunchAgent, wrapper command, and app directory
 │   └── README.md
 └── README.md
 ```
